@@ -29,12 +29,12 @@ public class AlbumServiceImpl implements  AlbumService{
     }
 
     @Override
-    public Album updateAlbum(Album album) {
+    public <T> Album updateAlbum(T property, Long id) {
         return null;
     }
 
     @Override
-    public Boolean deleteAlbum(Album album) {
+    public Boolean deleteAlbum(Long id) {
         return null;
     }
 }
