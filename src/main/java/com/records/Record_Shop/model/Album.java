@@ -1,12 +1,11 @@
 package com.records.Record_Shop.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name="album")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -15,6 +14,7 @@ import lombok.*;
 public class Album {
     @Id
     @GeneratedValue
+    @Column(updatable = false, nullable = false)
     Long id;
 
     @Column
@@ -24,7 +24,7 @@ public class Album {
     String artist;
 
     @Column
-    Integer year;
+    Integer album_year;
 
     @Column
     Integer price;
@@ -34,8 +34,5 @@ public class Album {
 
     @Column
     Integer sales;
-
-
-
 
 }
