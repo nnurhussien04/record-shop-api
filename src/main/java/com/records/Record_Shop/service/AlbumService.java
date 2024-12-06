@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface AlbumService {
     ArrayList<Album> listAllInStock();
-    Optional<Album> getAlbumById(Long id);
+    Optional<Album> getAlbumById(Long id) throws Exception;
     Album addAlbum(Album album);
-    Album updateAlbum(Album album, Long id);
+    Album updateAlbum(Album album, Long id) throws Exception;
     Boolean deleteAlbum(Long id);
 
 }
