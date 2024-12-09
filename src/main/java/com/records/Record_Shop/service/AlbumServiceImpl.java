@@ -1,12 +1,14 @@
 package com.records.Record_Shop.service;
 
+import com.records.Record_Shop.exceptions.Invalid_ID;
+import com.records.Record_Shop.exceptions.SQLError;
 import com.records.Record_Shop.model.Album;
 import com.records.Record_Shop.repository.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
@@ -21,56 +23,65 @@ public class AlbumServiceImpl implements  AlbumService{
     public ArrayList<Album> listAllInStock() {
         ArrayList<Album> inStock = new ArrayList<>();
         albumRepository.findAll().forEach(x -> {
-            try {
-                if (x.getStock() > 0) {
-                    inStock.add(x);
-                }
-            } catch (NullPointerException e){
-                e.printStackTrace();
+            if (x.getStock() > 0) {
+                inStock.add(x);
             }
         });
+        if(inStock.isEmpty()) {
+            throw new RuntimeException();
+        }
         return inStock;
     }
 
     @Override
-    public Optional<Album> getAlbumById(Long id) throws Exception{
-        Optional<Album> selectedAlbum = albumRepository.findById(id);
-        if(selectedAlbum.isEmpty()){
-            throw new Exception();
+    public Optional<Album> getAlbumById(Long id) {
+        if(id < 0){
+            throw new IllegalArgumentException();
         }
+        if(!albumRepository.existsById(id)){
+            throw new Invalid_ID();
+        }
+        Optional<Album> selectedAlbum = albumRepository.findById(id);
         return selectedAlbum;
     }
 
     @Override
     public Album addAlbum(Album album) {
         Album newAlbum = null;
-        try{
-            newAlbum = albumRepository.save(album);
-        } catch (IllegalArgumentException e){
-            e.printStackTrace();
+        if(album == null){
+            throw new NullPointerException();
         }
+        newAlbum = albumRepository.save(album);
+
         return newAlbum;
     }
 
     @Override
-    public Album updateAlbum(Album album,Long id) throws Exception{
+    public Album updateAlbum(Album album,Long id) {
         Album updatedAlbum = null;
+        if(album.equals(null)){
+            throw new NullPointerException();
+        }
         if(albumRepository.existsById(id)){
             album.setId(id);
             updatedAlbum = albumRepository.save(album);
-            return updatedAlbum;
-        } else{
-            throw new Exception();
+        } else {
+            throw new Invalid_ID();
         }
-
+        if(updatedAlbum == null){
+            throw new SQLError();
+        }
+        return updatedAlbum;
     }
 
     @Override
     public Boolean deleteAlbum(Long id) {
-        try {
-            albumRepository.delete(albumRepository.findById(id).get());
-        } catch (Exception e){
-            return false;
+        if(!albumRepository.existsById(id)){
+            throw new Invalid_ID();
+        }
+        albumRepository.delete(albumRepository.findById(id).get());
+        if(albumRepository.existsById(id)){
+            throw new SQLError();
         }
         return true;
     }
