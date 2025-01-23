@@ -35,13 +35,13 @@ public class AlbumServiceImpl implements  AlbumService{
 
     @Override
     public Optional<Album> getAlbumById(Long id) {
-        if(id < 0){
-            throw new IllegalArgumentException();
-        }
         if(!albumRepository.existsById(id)){
             throw new Invalid_ID();
         }
         Optional<Album> selectedAlbum = albumRepository.findById(id);
+        if(selectedAlbum.isEmpty()){
+            throw new SQLError();
+        }
         return selectedAlbum;
     }
 
