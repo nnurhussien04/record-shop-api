@@ -48,9 +48,15 @@ public class AlbumServiceImpl implements  AlbumService{
     @Override
     public Album addAlbum(Album album) {
         Album newAlbum = null;
-        if(album == null){
+        /*if(album == null){
+            System.out.println(album.getAlbum_name());
+            System.out.println(album.getAlbum_year());
+            System.out.println(album.getArtist());
+            System.out.println(album.getPrice());
+            System.out.println(album.getStock());
+            System.out.println(album.getSales());
             throw new NullPointerException();
-        }
+        }*/
         newAlbum = albumRepository.save(album);
 
         return newAlbum;

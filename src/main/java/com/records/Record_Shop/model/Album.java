@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.Set;
 
 
 @Entity
@@ -24,11 +25,21 @@ public class Album {
 
     @NotNull(message = "Name is empty")
     @Column
-    String name;
+    String album_name;
 
-    @NotNull(message = "Artist is empty")
-    @Column
-    String artist;
+    //@NotNull(message = "Artist is empty")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "artist_id")
+    Artist artist;
+
+    //@NotNull(message = "Genre is empty")
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "album_genre",
+            joinColumns = @JoinColumn(name="album_id",insertable = false,updatable = false),
+            inverseJoinColumns = @JoinColumn(name="genre_id")
+    )
+    Set<Genre> genre;
 
     @NotNull(message = "album_year is empty")
     @Column
