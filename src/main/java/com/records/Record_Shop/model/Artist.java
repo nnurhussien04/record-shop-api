@@ -1,6 +1,8 @@
 package com.records.Record_Shop.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -17,16 +19,20 @@ public class Artist {
     @Column(updatable = false, nullable = false)
     Long id;
 
-    @Column
-    String artist_name;
+    @Column(name = "artist_name")
+    @NotNull
+    String artistName;
 
     @Column
+    @NotNull
     int birth_year;
 
     @Column
+    @NotNull
     String nationality;
 
     @Column
+    @NotNull
     String hitSong;
 
 }

@@ -1,6 +1,7 @@
 package com.records.Record_Shop.repository;
 
 import com.records.Record_Shop.model.Album;
+import com.records.Record_Shop.model.Artist;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ class AlbumRepositoryTest {
     @BeforeEach
     void setup(){
         Album bobsAlbum = Album.builder()
-                .name("Bob's album")
-                .artist("Bob")
+                .album_name("Bob's album")
+                .artist(new Artist().builder().artistName("JZ").birth_year(1990).hitSong("Riches").nationality("USA").build())
                 .price(5)
                 .stock(10)
                 .build();

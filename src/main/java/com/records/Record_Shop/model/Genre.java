@@ -1,6 +1,7 @@
 package com.records.Record_Shop.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Set;
@@ -20,6 +21,7 @@ public class Genre {
     Long id;
 
     @Column
+    @NotNull
     String title;
 
 

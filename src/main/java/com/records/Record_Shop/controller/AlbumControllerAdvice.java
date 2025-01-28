@@ -18,7 +18,7 @@ public class AlbumControllerAdvice {
 
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException(){
-        return new ResponseEntity<>("There are no albums in stock", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Unexpected error has come up, please try again", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = NullPointerException.class)
