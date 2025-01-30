@@ -1,6 +1,7 @@
 package com.records.Record_Shop.service;
 
 import com.records.Record_Shop.exceptions.Invalid_ID;
+import com.records.Record_Shop.exceptions.JSONObjectError;
 import com.records.Record_Shop.exceptions.SQLError;
 import com.records.Record_Shop.model.Album;
 import com.records.Record_Shop.model.Artist;
@@ -57,7 +58,9 @@ public class AlbumServiceImpl implements  AlbumService{
     @Override
     public Album addAlbum(Album album) {
         Album newAlbum = null;
-
+        if(album.getAlbum_name() == null || (album.getAlbum_year() < 1948 || album.getAlbum_year() > 2025 ) || album.getArtist() == null || album.getGenre() == null || album.getStock() < 0 || album.getPrice() < 0 || album.getSales() < 0){
+            throw new JSONObjectError();
+        }
         Set<Genre> genres = album.getGenre().stream().map(
                 genre -> genreRepository.findByTitle(genre.getTitle()).orElseGet(() -> genreRepository.save(genre))).collect(Collectors.toSet());
         album.setGenre(genres);
@@ -72,8 +75,8 @@ public class AlbumServiceImpl implements  AlbumService{
     @Override
     public Album updateAlbum(Album album,Long id) {
         Album updatedAlbum = null;
-        if(album.equals(null)){
-            throw new NullPointerException();
+        if(album.getAlbum_name() == null || (album.getAlbum_year() < 1948 || album.getAlbum_year() > 2025 ) || album.getArtist() == null || album.getGenre() == null || album.getStock() < 0 || album.getPrice() < 0 || album.getSales() < 0){
+            throw new JSONObjectError();
         }
         if(albumRepository.existsById(id)){
             album.setId(id);
@@ -99,10 +102,11 @@ public class AlbumServiceImpl implements  AlbumService{
         if(!albumRepository.existsById(id)){
             throw new Invalid_ID();
         }
+
         albumRepository.delete(albumRepository.findById(id).get());
-        if(albumRepository.existsById(id)){
+        /*if(albumRepository.findById(id).getClass() == ){
             throw new SQLError();
-        }
+        }*/
         return true;
     }
 }

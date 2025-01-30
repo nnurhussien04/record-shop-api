@@ -1,6 +1,7 @@
 package com.records.Record_Shop.controller;
 
 import com.records.Record_Shop.exceptions.Invalid_ID;
+import com.records.Record_Shop.exceptions.JSONObjectError;
 import com.records.Record_Shop.exceptions.SQLError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,11 @@ public class AlbumControllerAdvice {
     @ExceptionHandler(value = SQLError.class)
     public ResponseEntity<String> handleSQLError(){
         return new ResponseEntity<>("SQL System Error", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = JSONObjectError.class)
+    public ResponseEntity<String> handleJSONObjectError(){
+        return new ResponseEntity<>("An error with the album you have submitted", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
