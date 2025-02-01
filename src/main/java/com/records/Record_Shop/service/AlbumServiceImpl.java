@@ -102,11 +102,7 @@ public class AlbumServiceImpl implements  AlbumService{
         if(!albumRepository.existsById(id)){
             throw new Invalid_ID();
         }
-
         albumRepository.delete(albumRepository.findById(id).get());
-        /*if(albumRepository.findById(id).getClass() == ){
-            throw new SQLError();
-        }*/
         return true;
     }
 }

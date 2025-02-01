@@ -42,7 +42,7 @@ public class AlbumController {
 
 
     @PutMapping({"update/{albumID}"})
-    public ResponseEntity<?> updateAlbum(@Valid @RequestBody Album album,@PathVariable long albumID) throws Exception{
+    public ResponseEntity<?> updateAlbum(@Valid @RequestBody Album album,@PathVariable long albumID){
         Album updatedAlbum = albumService.updateAlbum(album,albumID);
         return new ResponseEntity<>(updatedAlbum,HttpStatus.ACCEPTED);
     }
