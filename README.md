@@ -1,4 +1,4 @@
-📀** Record Shop Application**
+**📀Record Shop Application**
 This application is designed for managing a record shop's album inventory. It allows the shop to add, edit, and delete albums, as well as view detailed information for each one.
 
 🎯 Key Features
