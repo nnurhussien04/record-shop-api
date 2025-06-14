@@ -20,19 +20,15 @@ public class Artist {
     Long id;
 
     @Column(name = "artist_name")
-    @NotNull
     String artistName;
 
     @Column
-    @NotNull
     int birth_year;
 
     @Column
-    @NotNull
     String nationality;
 
     @Column
-    @NotNull
     String hitSong;
 
 }

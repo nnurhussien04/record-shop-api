@@ -5,10 +5,8 @@ import com.records.Record_Shop.exceptions.JSONObjectError;
 import com.records.Record_Shop.exceptions.SQLError;
 import com.records.Record_Shop.model.Album;
 import com.records.Record_Shop.model.Artist;
-import com.records.Record_Shop.model.Genre;
 import com.records.Record_Shop.repository.AlbumRepository;
 import com.records.Record_Shop.repository.ArtistRepository;
-import com.records.Record_Shop.repository.GenreRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +17,6 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 

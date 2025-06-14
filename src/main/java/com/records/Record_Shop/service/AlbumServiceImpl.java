@@ -5,26 +5,19 @@ import com.records.Record_Shop.exceptions.JSONObjectError;
 import com.records.Record_Shop.exceptions.SQLError;
 import com.records.Record_Shop.model.Album;
 import com.records.Record_Shop.model.Artist;
-import com.records.Record_Shop.model.Genre;
 import com.records.Record_Shop.repository.AlbumRepository;
-import com.records.Record_Shop.repository.GenreRepository;
 import com.records.Record_Shop.repository.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class AlbumServiceImpl implements  AlbumService{
 
     @Autowired
     AlbumRepository albumRepository;
-
-    @Autowired
-    GenreRepository genreRepository;
 
     @Autowired
     ArtistRepository artistRepository;
@@ -58,12 +51,9 @@ public class AlbumServiceImpl implements  AlbumService{
     @Override
     public Album addAlbum(Album album) {
         Album newAlbum = null;
-        if(album.getAlbum_name() == null || (album.getAlbum_year() < 1948 || album.getAlbum_year() > 2025 ) || album.getArtist() == null || album.getGenre() == null || album.getStock() < 0 || album.getPrice() < 0 || album.getSales() < 0){
+        if(album.getAlbum_name() == null || (album.getAlbum_year() < 1948 || album.getAlbum_year() > 2025 ) || album.getArtist() == null ||  album.getStock() < 0 || album.getPrice() < 0 || album.getSales() < 0){
             throw new JSONObjectError();
         }
-        Set<Genre> genres = album.getGenre().stream().map(
-                genre -> genreRepository.findByTitle(genre.getTitle()).orElseGet(() -> genreRepository.save(genre))).collect(Collectors.toSet());
-        album.setGenre(genres);
 
         Artist artist = artistRepository.findByArtistName(album.getArtist().getArtistName()).orElseGet(() -> artistRepository.save(album.getArtist()));
         album.setArtist(artist);
@@ -75,16 +65,19 @@ public class AlbumServiceImpl implements  AlbumService{
     @Override
     public Album updateAlbum(Album album,Long id) {
         Album updatedAlbum = null;
-        if(album.getAlbum_name() == null || (album.getAlbum_year() < 1948 || album.getAlbum_year() > 2025 ) || album.getArtist() == null || album.getGenre() == null || album.getStock() < 0 || album.getPrice() < 0 || album.getSales() < 0){
+        if(album.getAlbum_name() == null || (album.getAlbum_year() < 1948 || album.getAlbum_year() > 2025 ) || album.getArtist() == null || album.getStock() < 0 || album.getPrice() < 0 || album.getSales() < 0){
             throw new JSONObjectError();
         }
         if(albumRepository.existsById(id)){
             album.setId(id);
-            Set<Genre> genres = album.getGenre().stream().map(
-                    genre -> genreRepository.findByTitle(genre.getTitle()).orElseGet(() -> genreRepository.save(genre))).collect(Collectors.toSet());
-            album.setGenre(genres);
 
-            Artist artist = artistRepository.findByArtistName(album.getArtist().getArtistName()).orElseGet(() -> artistRepository.save(album.getArtist()));
+            Artist inputArtist = album.getArtist();
+
+            Artist artist = Optional.ofNullable(inputArtist)
+                    .flatMap(a -> artistRepository.findByArtistName(a.getArtistName()))
+                    .orElseGet(() -> artistRepository.save(inputArtist));
+
+
             album.setArtist(artist);
 
             updatedAlbum = albumRepository.save(album);
@@ -104,5 +97,11 @@ public class AlbumServiceImpl implements  AlbumService{
         }
         albumRepository.delete(albumRepository.findById(id).get());
         return true;
+    }
+
+    @Override
+    public Boolean findArtist(String inputArtist){
+        return artistRepository.findByArtistName(inputArtist)
+                .isPresent();
     }
 }

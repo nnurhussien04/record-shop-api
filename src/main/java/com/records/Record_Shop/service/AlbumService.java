@@ -11,5 +11,20 @@ public interface AlbumService {
     Album addAlbum(Album album);
     Album updateAlbum(Album album, Long id);
     Boolean deleteAlbum(Long id);
+    Boolean findArtist(String inputArtist);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

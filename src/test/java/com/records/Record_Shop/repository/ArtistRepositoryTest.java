@@ -1,16 +1,11 @@
 package com.records.Record_Shop.repository;
 
-import com.records.Record_Shop.model.Album;
 import com.records.Record_Shop.model.Artist;
-import com.records.Record_Shop.model.Genre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 

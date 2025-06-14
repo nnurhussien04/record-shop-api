@@ -2,7 +2,6 @@ package com.records.Record_Shop.repository;
 
 
 import com.records.Record_Shop.model.Album;
-import com.records.Record_Shop.model.Genre;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.CrudRepository;

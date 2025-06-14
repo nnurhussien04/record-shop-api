@@ -53,4 +53,10 @@ public class AlbumController {
         return new ResponseEntity<>(deletedAlbum,HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/artist")
+    public ResponseEntity<?> getArtistByName(@RequestParam("name") String name){
+        Boolean selectedAlbum = albumService.findArtist(name);
+        return new ResponseEntity<>(selectedAlbum,HttpStatus.OK);
+    }
+
 }

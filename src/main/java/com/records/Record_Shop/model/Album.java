@@ -32,15 +32,6 @@ public class Album {
     @JoinColumn(name = "artist_id")
     Artist artist;
 
-    //@NotNull(message = "Genre is empty")
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "album_genre",
-            joinColumns = @JoinColumn(name="album_id",insertable = false,updatable = false),
-            inverseJoinColumns = @JoinColumn(name="genre_id")
-    )
-    Set<Genre> genre;
-
     @NotNull(message = "album_year is empty")
     @Column
     Integer album_year;

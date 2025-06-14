@@ -2,17 +2,14 @@ package com.records.Record_Shop.repository;
 
 import com.records.Record_Shop.model.Album;
 import com.records.Record_Shop.model.Artist;
-import com.records.Record_Shop.model.Genre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,15 +26,12 @@ class AlbumRepositoryTest {
 
     @BeforeEach
     void setup(){
-        Set<Genre> genres = new HashSet<>();
-        genres.add(new Genre().builder().title("rap").build());
         bobsAlbum = Album.builder()
                 .id(1l)
                 .album_name("Bob's album")
                 .artist(new Artist().builder().artistName("JZ").birth_year(1990).hitSong("Riches").nationality("USA").build())
                 .price(5)
                 .stock(10)
-                .genre(genres)
                 .build();
         //Album bob = repository.save(bobsAlbum);
         //bobsId = bob.getId();
