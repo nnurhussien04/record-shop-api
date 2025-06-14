@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.northcoders.recordsapp.R;
 
 import model.Album;
+import model.Artist;
 import ui.mainactivity.MainActivity;
 import ui.mainactivity.MainActivityViewModel;
 
@@ -25,12 +26,16 @@ public class AddAlbumClickHandlers {
     }
 
     public void clickForNewAlbum(View view){
-        if(album.getName() == null || album.getArtist() == null || album.getAlbum_year() < 0 || album.getSales() < 0 || album.getStock() < 0 || album.getPrice() < 0){
+        if(album.getName() == null || album.getArtist().getArtistName() == null || album.getAlbum_year() < 0 || album.getSales() < 0 || album.getStock() < 0 || album.getPrice() < 0){
             Toast.makeText(context,"Album has no value please try again",Toast.LENGTH_SHORT).show();
         }
         else{
             Intent intent = new Intent(view.getContext(), MainActivity.class);
+            Artist artist = new Artist();
+            artist.setArtistName(album.getArtist().getArtistName().trim());
+            album.setArtist(artist);
             viewModel.makeAlbum(album);
+            Toast.makeText(context,"Album Added",Toast.LENGTH_SHORT).show();
             context.startActivity(intent);
         }
     }

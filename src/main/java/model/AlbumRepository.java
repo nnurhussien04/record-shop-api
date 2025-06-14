@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +51,22 @@ public class AlbumRepository {
                 new Callback<Album>() {
                     @Override
                     public void onResponse(Call<Album> call, Response<Album> response) {
-                        Toast.makeText(application.getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
-                    }
+                        if(response.isSuccessful()) {
+                            Log.d("SuccessPostAlbum", "onResponse: " + response.code() + response.body());
+                            Toast.makeText(application.getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            try {
+                                Log.d("FailedPostAlbum", response.code() + " " + response.errorBody().string());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        }
 
                     @Override
                     public void onFailure(Call<Album> call, Throwable t) {
+                        Log.d("FailedPostAlbum", "onResponse: " + t.getMessage());
                         Toast.makeText(application.getApplicationContext(),"Failed", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -69,6 +81,7 @@ public class AlbumRepository {
                 new Callback<Album>() {
                     @Override
                     public void onResponse(Call<Album> call, Response<Album> response) {
+
                         Toast.makeText(application.getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
                     }
 
@@ -82,17 +95,18 @@ public class AlbumRepository {
 
     public void deleteAlbum(long albumID){
         AlbumApiService albumApiService = RetrofitInstance.getService();
-        Call<Album> deletedAlbumCall = albumApiService.deleteAlbum(albumID);
+        Call<Boolean> deletedAlbumCall = albumApiService.deleteAlbum(albumID);
         deletedAlbumCall.enqueue(
-                new Callback<Album>() {
+                new Callback<Boolean>() {
                     @Override
-                    public void onResponse(Call<Album> call, Response<Album> response) {
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                         Toast.makeText(application.getApplicationContext(),"Success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onFailure(Call<Album> call, Throwable t) {
-                        Toast.makeText(application.getApplicationContext(),"Failed", Toast.LENGTH_SHORT).show();
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        Log.d("DeleteError", "onFailure: " + t.getMessage());
+                        Toast.makeText(application.getApplicationContext(),"Failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
         );

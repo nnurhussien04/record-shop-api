@@ -14,6 +14,7 @@ import com.northcoders.recordsapp.R;
 import com.northcoders.recordsapp.databinding.ActivityAddNewAlbumBinding;
 
 import model.Album;
+import model.Artist;
 import ui.mainactivity.MainActivityViewModel;
 
 public class AddNewAlbumActivity extends AppCompatActivity {
@@ -28,12 +29,15 @@ public class AddNewAlbumActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_new_album);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
         album = new Album();
+        if (album.getArtist() == null) {
+            Artist artist = new Artist();
+            artist.setArtistName(null);
+            artist.setNationality(null);
+            artist.setBirth_year(0);
+            artist.setHitSong(null);
+            album.setArtist(artist);
+        }
         binding = DataBindingUtil.setContentView(this,R.layout.activity_add_new_album);
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         handlers = new AddAlbumClickHandlers(album,this,viewModel);

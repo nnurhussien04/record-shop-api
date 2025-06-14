@@ -45,6 +45,7 @@ public class UpdateAlbumClickHandlers {
                 newAlbum.getArtist().setNationality(null);
                 newAlbum.getArtist().setHitSong(null);
             }
+            newAlbum.getArtist().getArtistName().trim();
             Intent intent = new Intent(view.getContext(), MainActivity.class);
             albumID = album.getId();
             intent.putExtra("ALBUM_KEY",newAlbum);
@@ -54,7 +55,7 @@ public class UpdateAlbumClickHandlers {
     }
 
     public void deleteButton(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder
                 .setTitle(R.string.dialog_title)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -74,6 +75,7 @@ public class UpdateAlbumClickHandlers {
                     }
                 })
         ;
+        builder.show();
 
 
     }

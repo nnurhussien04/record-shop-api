@@ -158,37 +158,6 @@ public class Album extends BaseObservable implements Parcelable {
         notifyPropertyChanged(BR.id);
     }
 
-    @BindingAdapter("genreSet")
-    public static void setGenreSet(EditText view, Set<String> genres) {
-        String joined = genres == null ? "" : String.join(", ", genres);
-        // Prevent infinite loop: only update if text is different
-        if (!view.getText().toString().equals(joined)) {
-            view.setText(joined);
-        }
-    }
-
-    // 2. InverseBindingAdapter: Parse EditText to Set<String>
-    @InverseBindingAdapter(attribute = "genreSet", event = "genreSetAttrChanged")
-    public static Set<String> getGenreSet(EditText view) {
-        String text = view.getText().toString().trim();
-        if (text.isEmpty()) return new HashSet<>();
-        return Arrays.stream(text.split(","))
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.toSet());
-    }
-
-    // 3. Listen for changes and notify data binding
-    @BindingAdapter(value = {"genreSetAttrChanged"})
-    public static void setGenreSetListener(EditText view, final InverseBindingListener listener) {
-        view.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (listener != null) listener.onChange();
-            }
-            @Override public void afterTextChanged(Editable s) {}
-        });
-    }
     @BindingAdapter("bindIntAsString")
     public static void bindIntAsString(TextView view, Integer value) {
         String currentText = view.getText().toString();
