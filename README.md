@@ -1,8 +1,8 @@
-**📀Record Shop Application**
+# 📀Record Shop Application
 
 This application is designed for managing a record shop's album inventory. It allows the shop to add, edit, and delete albums, as well as view detailed information for each one.
 
-🎯 Key Features
+## 🎯 Key Features
 Add, update, and delete album entries
 
 View album details including:
@@ -11,12 +11,12 @@ Artist
 Stock availability
 Total sales
 
-🧰 Tech Stack
+## 🧰 Tech Stack
 Backend: Java with Spring Boot
 Frontend: Android Studio using Java
 Database: PostgreSQL
 
-▶️ How to Run the Application
+## ▶️ How to Run the Application
 Clone the Repositories
 Download both the frontend (Android app) and backend (Spring Boot API) projects from the repository.
 
