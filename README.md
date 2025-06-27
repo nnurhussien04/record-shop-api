@@ -12,13 +12,13 @@ Stock availability
 Total sales
 
 ## 🧰 Tech Stack
-Backend: Java with Spring Boot
-Frontend: Android Studio using Java
-Database: PostgreSQL
+- Backend: Java with Spring Boot
+- Frontend: Android Studio using Java
+- Database: PostgreSQL
 
 ## ▶️ How to Run the Application
-Clone the Repositories
-Download both the frontend (Android app) and backend (Spring Boot API) projects from the repository.
+- Clone the Repositories
+- Download both the frontend (Android app) and backend (Spring Boot API)       projects from the repository.
 
 1. Set Up the Database:
     Create a new database in your PostgreSQL (or preferred) database server.
